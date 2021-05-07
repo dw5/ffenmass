@@ -5,11 +5,13 @@ FFenmass is a small simple python utility to encode directories and recreating t
 ![Demo](example.gif)
 
 
-
+### Dependencies
+[`ffmpeg`](https://www.ffmpeg.org/)
+[`yaspin`](https://github.com/pavdmyt/yaspin)
+[`rich`](https://github.com/willmcgugan/rich)
 
 
 ## Installation
-
 Make the `install.sh` script executable and run
 
 ```bash
