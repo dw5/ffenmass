@@ -2,7 +2,7 @@
 
 FFenmass is a small simple python utility to encode directories and recreating them recursively, inspired by h265ize.
 
-
+![Demo](example.gif)
 
 
 
