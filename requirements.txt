@@ -1,3 +1,2 @@
 yaspin
 rich
-setuptools
