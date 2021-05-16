@@ -1,6 +1,6 @@
 # FFenmass
 
-FFenmass is a simple python utility to encode directories and recreate them recursively, inspired by h265ize.
+FFenmass is a simple python utility to encode videos in directories and recreate them recursively, inspired by h265ize.
 
 ![Demo](example.gif)
 
@@ -12,12 +12,7 @@ FFenmass is a simple python utility to encode directories and recreate them recu
 
 
 ## Installation
-Make the `install.sh` script executable and run
-
-```bash
-sudo ./install.sh
-```
-This will copy the `ffenmass` in your `/bin` directory
+pip module comming soon, for now just invoke the script using the interpreter.
 
 ## Usage
 
@@ -33,12 +28,12 @@ with the only exception being the input (`-i`) and the output being directories 
 ffmpeg -i input.mkv -vcodec libx265 out.mkv
 
 
-ffenmass -i /path/to/movies/ -vcodec libx265 /output/directory/
+python3 ffenmass -i /path/to/media/ -vcodec libx265 /output/directory/
 ```
 
 
 
-`ffenmass` will encode all media video files detected under the input directory and output them with **the same folder structure and filenames** in the output directory.
+`ffenmass` will encode all video files detected under the input directory and output them with **the same folder structure and filenames** in the output directory.
 
 
 
@@ -51,7 +46,7 @@ ffenmass -i /path/to/movies/ -vcodec libx265 /output/directory/
 
 
 ## Contributing
-Pull requests are welcome.Open an issue first to discuss what you would like to change.
+Open an issue first to discuss what you would like to change.
 
 
 ## License
