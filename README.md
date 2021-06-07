@@ -7,7 +7,6 @@ Currently works in **Linux** folder structures only.
 
 ### Dependencies
 [`ffmpeg`](https://www.ffmpeg.org/)
-[`yaspin`](https://github.com/pavdmyt/yaspin)
 [`rich`](https://github.com/willmcgugan/rich)
 
 
