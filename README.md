@@ -52,10 +52,10 @@ Open an issue first to discuss what you would like to change.
 
 
 ## Changelogs
- **0.1.1**
+ **0.2.0**
  
  - Ignores extensions, will now work with audio,video,subs etc.
- - added pip module
+ - Made into a pip module.
 
 
 
