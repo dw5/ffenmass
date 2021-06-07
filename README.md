@@ -49,6 +49,11 @@ ffenmass -i /path/to/media/ -vcodec libx265 -f mkv /output/directory/
 ## Contributing
 Open an issue first to discuss what you would like to change.
 
+## TODO
+ - Parse FFMPEG's output to create a progress bar
+ - Find a way to make this work with 2 pass encoding
+ - Clean up spaggeti
+ - idk find more stuff to do
 
 ## Changelogs
  **0.2.1**
