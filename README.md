@@ -1,6 +1,6 @@
 # FFenmass
 
-FFenmass is a simple python utility to manipulate in directories and recreate them recursively, inspired by h265ize.
+FFenmass is an FFmpeg python wrapper to manipulate media files in directories enmass and recreate them recursively, inspired by h265ize.
 Currently works in **Linux** folder structures only.
 
 
