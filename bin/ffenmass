@@ -12,33 +12,18 @@ from os.path import isfile, join, basename, normpath, relpath, dirname, abspath,
 import pathlib
 import glob
 
-video_containers = ['.avi',
-                    '.mkv',
-                    '.mp4',
-                    '.mpeg',
-                    '.ts',
-                    '.m2ts',
-                    '.webm',
-                    '.m4v']
-
 
 def checkmake_dir(directory: str):
     return pathlib.Path(directory).mkdir(parents=True, exist_ok=True)
 
 
 def get_all_media_files_in_dir(fullsrcpath: str):
-    allfiles = glob.glob(fullsrcpath + '/**/*', recursive=True)
-    onlymedia = []
-    for i in range(0, len(allfiles)):
-        for j in video_containers:
-            if j in allfiles[i]:
-                onlymedia.append(allfiles[i])
-    return onlymedia
+    return glob.glob(fullsrcpath + '/**/*', recursive=True)
 
 
 def outfile_path(fullfilepath: str, outpath: str):
-    checkmake_dir(abspath(outpath))
-    return outpath+'/'+basename(fullfilepath)
+    checkmake_dir(abspath(outpath)+'/'+dirname(fullfilepath))
+    return outpath+'/'+os.path.splitext(fullfilepath)[0]
 
 
 def dir_path(string):
@@ -56,7 +41,7 @@ if __name__ == '__main__':
         FFenmass[/bold yellow]
         [yellow]Simple ffmpeg wrapper to encode whole directories.[/yellow]
         [blue]Written By :[/blue] NoPantsCrash
-        [blue]Version : 0.1.0[/blue]
+        [blue]Version : 0.2.0[/blue]
         
         """)
         args = ['ffmpeg', '-y']+sys.argv[1:]
@@ -80,7 +65,7 @@ if __name__ == '__main__':
 
         inputfiles = get_all_media_files_in_dir(fullsrcpath=inpath)
         rich.print(
-            f'[bold yellow]Grabbed {len(inputfiles)} media files.[/bold yellow]')
+            f'[bold yellow]Grabbed {len(inputfiles)} media files to encode.[/bold yellow]')
         counter = 0
         for file in inputfiles:
             args[args.index('-i') + 1] = file
@@ -92,13 +77,12 @@ if __name__ == '__main__':
                 sp.text = "Encoding..."
                 args[-1] = outfile_path(fullfilepath=file, outpath=outpath)
                 subprocess.call(args, stderr=subprocess.DEVNULL,
-                                stdout=subprocess.DEVNULL)
-
+                                                    stdout=subprocess.DEVNULL)
             rich.print(f"[bold blue]Done ![/bold blue]\n")
             rich.print("\n")
             counter += 1
     except KeyboardInterrupt:
-        print('Goodbye!  :D')
+        print('Keyboard Exception, exiting.')
         try:
             sys.exit(0)
         except SystemExit:
