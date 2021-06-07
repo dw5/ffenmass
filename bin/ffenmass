@@ -17,13 +17,18 @@ def checkmake_dir(directory: str):
     return pathlib.Path(directory).mkdir(parents=True, exist_ok=True)
 
 
-def get_all_media_files_in_dir(fullsrcpath: str):
-    return glob.glob(fullsrcpath + '/**/*', recursive=True)
+def get_all_media_files_in_dir(inpath: str):
+    filesonly = []
+    for item in list(glob.glob(inpath + '/**/*', recursive=True)):
+        if isfile(item):
+            filesonly.append(item)
 
+    return filesonly
 
-def outfile_path(fullfilepath: str, outpath: str):
-    checkmake_dir(abspath(outpath)+'/'+dirname(fullfilepath))
-    return outpath+'/'+os.path.splitext(fullfilepath)[0]
+def outfile_path(fullfilepath: str,inpath:str,extension:str, outpath: str):
+    fullout = fullfilepath.replace(inpath,outpath)
+    checkmake_dir(dirname(fullout))
+    return os.path.splitext(fullout)[0]+'.'+extension
 
 
 def dir_path(string):
@@ -41,16 +46,22 @@ if __name__ == '__main__':
         FFenmass[/bold yellow]
         [yellow]Simple ffmpeg wrapper to encode whole directories.[/yellow]
         [blue]Written By :[/blue] NoPantsCrash
-        [blue]Version : 0.2.0[/blue]
+        [blue]Version : 0.2.1[/blue]
         
         """)
         args = ['ffmpeg', '-y']+sys.argv[1:]
+
+
+        #Checking if input exists
         try:
             inpath = args[args.index('-i') + 1]
         except ValueError:
             rich.print('[bold red]ERROR : Could not catch -i argument[/bold red]')
             exit()
 
+
+
+        #Checking if input/output is valid directory
         outpath = args[len(args)-1:][0]
         if dir_path(inpath):
             pass
@@ -63,24 +74,37 @@ if __name__ == '__main__':
             rich.print('[bold red]Output is not a directory![/bold red]')
             exit()
 
-        inputfiles = get_all_media_files_in_dir(fullsrcpath=inpath)
+        #Checking if extension is provided
+        try:
+            extension = args[args.index('-f') + 1]
+        except ValueError:
+            rich.print('[bold red]ERROR : Could not catch -f argument[/bold red]')
+            exit()
+
+
+        #Getting all paths and files    
+        inputfiles = get_all_media_files_in_dir(inpath=inpath)
         rich.print(
             f'[bold yellow]Grabbed {len(inputfiles)} media files to encode.[/bold yellow]')
         counter = 0
+
+
+
+        #Main Program Loop
         for file in inputfiles:
             args[args.index('-i') + 1] = file
             rich.print(
                 f"[bold magenta]Processed : {counter}/{len(inputfiles)}[/bold magenta]")
             rich.print(
                 f"[bold magenta]Currently Processing  : {basename(file)}[/bold magenta]")
-            with yaspin() as sp:
-                sp.text = "Encoding..."
-                args[-1] = outfile_path(fullfilepath=file, outpath=outpath)
-                subprocess.call(args, stderr=subprocess.DEVNULL,
-                                                    stdout=subprocess.DEVNULL)
+            args[-1] = outfile_path(fullfilepath=file,inpath=inpath,extension=extension ,outpath=outpath)
+            subprocess.call(args)
             rich.print(f"[bold blue]Done ![/bold blue]\n")
             rich.print("\n")
             counter += 1
+
+
+    #Basic Keyboard Interrupt
     except KeyboardInterrupt:
         print('Keyboard Exception, exiting.')
         try:
