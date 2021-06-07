@@ -30,7 +30,7 @@ Because `ffenmass` ignores file extensions, you will need to specifify file cont
 ffmpeg -i input.mkv -vcodec libx265 out.mkv
 
 
-python3 ffenmass -i /path/to/media/ -vcodec libx265 -f mkv /output/directory/
+ffenmass -i /path/to/media/ -vcodec libx265 -f mkv /output/directory/
 ```
 
 
