@@ -1,2 +1,2 @@
-yaspin
+
 rich
