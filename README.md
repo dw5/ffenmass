@@ -8,7 +8,9 @@ Currently works in **Linux** folder structures only.
 ### Dependencies
 [`ffmpeg`](https://www.ffmpeg.org/)
 
-Yeah you pretty much need Python 3 and ffmpeg installed.Ideally ,moving forward with this project I will try to keep it that way.
+Yeah you pretty much need Python 3 and ffmpeg installed.
+<br>
+Ideally, moving forward with this project, I will try to keep it that way.
 
 <br>
 
