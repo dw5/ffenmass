@@ -25,12 +25,34 @@ pip3 install ffenmass
 
 `ffenmass` is transparent above `ffmpeg`, this means most `ffmpeg` syntax can be used with ffenmass as is.
 
+### Differences
+
+<br>
 
 The only differences being the input (`-i`) and the output being directories instead of files.
 Also because `ffenmass` ignores file extensions, you will need to specifify container using ffmpeg's `-f` argument.
 
+<br>
+
+```
+FFMPEG                              FFENMASS
+-i /path/to/file          →         -i /path/to/folder/
+
+-f (optional argument     →         -f (Required argument)
+
+output must be file path  →          output must be folder path
+
+```
+
+<br>
+
+
 
 `ffenmass` will encode all video files detected under the input directory with the provided ffmpeg arguments and output them with **the same folder structure and filenames** in the output directory.
+
+<br>
+
+Other than these differences, you can use ffenmass as you would normally use ffmpeg, following the same docs and guidelines.
 
 <br>
 
