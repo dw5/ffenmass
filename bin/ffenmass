@@ -1,35 +1,39 @@
 #!/usr/bin/env python3
 
 
-import os
-import subprocess
+from os import system, _exit,name
+from subprocess import call
 import sys
-import rich
-from os.path import abspath
 from os import listdir, path
-from os.path import isfile, join, basename, normpath, relpath, dirname, abspath, isdir
-import pathlib
-import glob
+from os.path import isfile, join, basename, normpath, relpath, dirname, abspath, isdir,splitext
+from pathlib import Path
+from glob import glob
 
 
+# Check if the Directory exists, if not make it
 def checkmake_dir(directory: str):
-    return pathlib.Path(directory).mkdir(parents=True, exist_ok=True)
+    return Path(directory).mkdir(parents=True, exist_ok=True)
 
-
+# Return All file objects from a directory tree
 def get_all_media_files_in_dir(inpath: str):
     filesonly = []
-    for item in list(glob.glob(inpath + '/**/*', recursive=True)):
+    for item in list(glob(inpath + '/**/*', recursive=True)):
         if isfile(item):
             filesonly.append(item)
 
     return filesonly
 
-def outfile_path(fullfilepath: str,inpath:str,extension:str, outpath: str):
+
+
+# Change the full input path root path to match the output root path
+def outfile_path(fullfilepath: str,inpath:str, outpath: str):
     fullout = fullfilepath.replace(inpath,outpath)
     checkmake_dir(dirname(fullout))
-    return os.path.splitext(fullout)[0]+'.'+extension
+    return splitext(fullout)[0]
 
 
+
+# Check if a string is a directory
 def dir_path(string):
     if isdir(string):
         return string
@@ -39,13 +43,13 @@ def dir_path(string):
 
 if __name__ == '__main__':
     try:
-        os.system('cls' if os.name == 'nt' else 'clear')
-        rich.print("""[bold yellow]
+        system('cls' if name == 'nt' else 'clear')
+        print("""
         
-        FFenmass[/bold yellow]
-        [yellow]Simple ffmpeg wrapper to encode whole directories.[/yellow]
-        [blue]Written By :[/blue] NoPantsCrash
-        [blue]Version : 0.2.1[/blue]
+        FFenmass
+        Simple ffmpeg wrapper to encode whole directories.
+        Written By : NoPantsCrash
+        Version : 0.2.2
         
         """)
         args = ['ffmpeg', '-y']+sys.argv[1:]
@@ -55,8 +59,11 @@ if __name__ == '__main__':
         try:
             inpath = args[args.index('-i') + 1]
         except ValueError:
-            rich.print('[bold red]ERROR : Could not catch -i argument[/bold red]')
-            exit()
+            print('ERROR : Could not catch -i argument')
+            try:
+                sys.exit(0)
+            except SystemExit:
+                _exit(0)
 
 
 
@@ -65,26 +72,35 @@ if __name__ == '__main__':
         if dir_path(inpath):
             pass
         else:
-            rich.print('[bold red]Input is not a valid directory![/bold red]')
-            exit()
+            print('Input is not a valid directory!')
+            try:
+                sys.exit(0)
+            except SystemExit:
+                _exit(0)
         if dir_path(outpath):
             pass
         else:
-            rich.print('[bold red]Output is not a directory![/bold red]')
-            exit()
+            print('Output is not a directory!')
+            try:
+                sys.exit(0)
+            except SystemExit:
+                _exit(0)
 
         #Checking if extension is provided
         try:
             extension = args[args.index('-f') + 1]
         except ValueError:
-            rich.print('[bold red]ERROR : Could not catch -f argument[/bold red]')
-            exit()
+            print('ERROR : Could not catch -f argument')
+            try:
+                sys.exit(0)
+            except SystemExit:
+                _exit(0)
 
 
         #Getting all paths and files    
         inputfiles = get_all_media_files_in_dir(inpath=inpath)
-        rich.print(
-            f'[bold yellow]Grabbed {len(inputfiles)} media files to encode.[/bold yellow]')
+        print(
+            f'Grabbed {len(inputfiles)} media files to encode.')
         counter = 0
 
 
@@ -92,14 +108,15 @@ if __name__ == '__main__':
         #Main Program Loop
         for file in inputfiles:
             args[args.index('-i') + 1] = file
-            rich.print(
-                f"[bold magenta]Processed : {counter}/{len(inputfiles)}[/bold magenta]")
-            rich.print(
-                f"[bold magenta]Currently Processing  : {basename(file)}[/bold magenta]")
-            args[-1] = outfile_path(fullfilepath=file,inpath=inpath,extension=extension ,outpath=outpath)
-            subprocess.call(args)
-            rich.print(f"[bold blue]Done ![/bold blue]\n")
-            rich.print("\n")
+            print(
+                f"Processed : {counter}/{len(inputfiles)}")
+            print(
+                f"Currently Processing  : {basename(file)}")
+            print("\n\n\n")
+
+            args[-1] = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
+            call(args)
+            print("\n\n\n")
             counter += 1
 
 
@@ -109,4 +126,4 @@ if __name__ == '__main__':
         try:
             sys.exit(0)
         except SystemExit:
-            os._exit(0)
+            _exit(0)
