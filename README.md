@@ -11,7 +11,7 @@
   <p align="center">
   <img alt="PyPI" src="https://img.shields.io/pypi/v/ffenmass"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ffenmass"> <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/ffenmass"> <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ffenmass"> <img alt="PyPI - Format" src="https://img.shields.io/pypi/format/ffenmass"> <img alt="PyPI - Status" src="https://img.shields.io/pypi/status/ffenmass">
   <br />
-    CLI Utility to encode and recreate whole directories with ffmpeg. 
+    CLI Utility to encode and recursively recreate directories with ffmpeg. 
     <br />
     <a href="https://github.com/NoPantsCrash/ffenmass/issues">Report Bug</a>
     ·
@@ -124,21 +124,3 @@ Any contributions you make are **greatly appreciated**.
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
-
-
-
-
-<!-- MARKDOWN LINKS & IMAGES -->
-<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
-[contributors-shield]: https://img.shields.io/github/contributors/NoPantsCrash/repo.svg?style=for-the-badge
-[contributors-url]: https://github.com/NoPantsCrash/repo/graphs/contributors
-[forks-shield]: https://img.shields.io/github/forks/NoPantsCrash/repo.svg?style=for-the-badge
-[forks-url]: https://github.com/NoPantsCrash/repo/network/members
-[stars-shield]: https://img.shields.io/github/stars/NoPantsCrash/repo.svg?style=for-the-badge
-[stars-url]: https://github.com/NoPantsCrash/repo/stargazers
-[issues-shield]: https://img.shields.io/github/issues/NoPantsCrash/repo.svg?style=for-the-badge
-[issues-url]: https://github.com/NoPantsCrash/repo/issues
-[license-shield]: https://img.shields.io/github/license/NoPantsCrash/repo.svg?style=for-the-badge
-[license-url]: https://github.com/NoPantsCrash/repo/blob/master/LICENSE.txt
-[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
-[linkedin-url]: https://linkedin.com/in/NoPantsCrash
