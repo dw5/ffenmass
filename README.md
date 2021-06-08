@@ -38,7 +38,7 @@ Also because `ffenmass` ignores file extensions, you will need to specifify cont
 FFMPEG                              FFENMASS
 -i /path/to/file          →         -i /path/to/folder/
 
--f (optional argument     →         -f (Required argument)
+-f (optional argument)    →         -f (Required argument)
 
 output must be file path  →          output must be folder path
 
