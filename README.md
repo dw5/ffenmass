@@ -1,58 +1,80 @@
-# FFenmass
 
-FFenmass is an CLI wrapper around ffmpeg, adds the functions to manipulate whole directories and recreate them recursively as output.
+<!-- PROJECT LOGO -->
+<br />
+<p align="center">
+  <a href="https://github.com/NoPantsCrash/ffenmass">
+    <img src="images/logo.png" alt="Logo" width="80" height="80">
+  </a>
+
+  <h3 align="center">FFenmass</h3>
+
+  <p align="center">
+    CLI Utility to encode and recreate whole directories with ffmpeg. 
+    <br />
+    <a href="https://github.com/NoPantsCrash/ffenmass/issues">Report Bug</a>
+    ·
+    <a href="https://github.com/NoPantsCrash/ffenmass/issues">Request Feature</a>
+  </p>
+</p>
+
+
+
+<!-- TABLE OF CONTENTS -->
+<details open="open">
+  <summary><h2 style="display: inline-block">Table of Contents</h2></summary>
+  <ol>
+    <li>
+      <a href="#getting-started">Getting Started</a>
+      <ul>
+        <li><a href="#prerequisites">Prerequisites</a></li>
+        <li><a href="#installation">Installation</a></li>
+      </ul>
+    </li>
+    <li><a href="#usage">Usage</a></li>
+    <li><a href="#contributing">Contributing</a></li>
+    <li><a href="#changelogs">Changelogs</a></li>
+    <li><a href="#license">License (MIT)</a></li>
+  </ol>
+</details>
+
+
+
+
+
+<!-- GETTING STARTED -->
+## Getting Started
+
+FFenmass is an ffmpeg wrapper, adding the ability to manipulate media files in directories and recreate them recursively.
 Currently works in **Linux** folder structures only.
-
-
-
-### Dependencies
-[`ffmpeg`](https://www.ffmpeg.org/)
-
-Yeah you pretty much need Python 3 and ffmpeg installed.
-<br>
-Ideally, moving forward with this project, I will try to keep it that way.
+**Windows** support is planned.
 
 <br>
 
-## Installation
-```bash
-pip3 install ffenmass
-```
+### Prerequisites
 
+FFenmass only requires **ffmpeg** and **python3**.
+
+<br>
+
+### Installation
+
+Using `pip`
+   ```bash
+   pip3 install ffenmass
+   ```
+
+<br>
+
+<!-- USAGE EXAMPLES -->
 ## Usage
 
+**FFenmass** is transparent above **ffmpeg**, this means **most ffmpeg syntax can be used with ffenmass as is**.
 
+The only **differences being** the **input (-i) and** the **output** being **directories instead of files**.
 
-`ffenmass` is transparent above `ffmpeg`, this means most `ffmpeg` syntax can be used with ffenmass as is.
+Also **ffenmass ignores file extensions**, you will need to **specifify container using ffmpeg's -f argument**.
 
-### Differences
-
-<br>
-
-The only differences being the input (`-i`) and the output being directories instead of files.
-Also because `ffenmass` ignores file extensions, you will need to specifify container using ffmpeg's `-f` argument.
-
-<br>
-
-```
-FFMPEG                              FFENMASS
--i /path/to/file          →         -i /path/to/folder/
-
--f (optional argument)    →         -f (Required argument)
-
-output must be file path  →          output must be folder path
-
-```
-
-<br>
-
-
-
-`ffenmass` will encode all video files detected under the input directory with the provided ffmpeg arguments and output them with **the same folder structure and filenames** in the output directory.
-
-<br>
-
-Other than these differences, you can use ffenmass as you would normally use ffmpeg, following the same docs and guidelines.
+The result is ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
 <br>
 
@@ -64,8 +86,9 @@ ffmpeg -i input.mkv -acodec copy -vcodec libx265 -b:v 2M -minrate 1M -maxrate 3M
 ffenmass -i /path/to/folder/ -acodec copy -vcodec libx265 -b:v 2M -minrate 1M -maxrate 3M -preset medium -f mp4 /output/directory/
 ```
 <br>
+<br>
 
-Directory Tree visualization of what is going on when you run the command from the example above.
+**Directory Tree visualization** of what is going on when you run the **command from the example above**.
 ```
 path/to/folder/                           /output/directory/
 ├── givemefolders                         ├── givemefolders      
@@ -84,20 +107,36 @@ path/to/folder/                           /output/directory/
 ```
 
 
+
 <br>
 
-**Make sure your input/output directories have a trailing `/`**
-```
-/path/to/directory   #Is not a valid input
-
-/path/to/directory/  #Is a valid input
-```
-
-
+<!-- CONTRIBUTING -->
 ## Contributing
-Open an issue first to discuss what you would like to change.
+Any contributions you make are **greatly appreciated**.
 
-Check out the [`changelogs`](CHANGELOGS.md) for notes and todos.
 
+
+
+<!-- LICENSE -->
 ## License
-[MIT](https://choosealicense.com/licenses/mit/)
+
+Distributed under the MIT License. See `LICENSE` for more information.
+
+
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/NoPantsCrash/repo.svg?style=for-the-badge
+[contributors-url]: https://github.com/NoPantsCrash/repo/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/NoPantsCrash/repo.svg?style=for-the-badge
+[forks-url]: https://github.com/NoPantsCrash/repo/network/members
+[stars-shield]: https://img.shields.io/github/stars/NoPantsCrash/repo.svg?style=for-the-badge
+[stars-url]: https://github.com/NoPantsCrash/repo/stargazers
+[issues-shield]: https://img.shields.io/github/issues/NoPantsCrash/repo.svg?style=for-the-badge
+[issues-url]: https://github.com/NoPantsCrash/repo/issues
+[license-shield]: https://img.shields.io/github/license/NoPantsCrash/repo.svg?style=for-the-badge
+[license-url]: https://github.com/NoPantsCrash/repo/blob/master/LICENSE.txt
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/NoPantsCrash

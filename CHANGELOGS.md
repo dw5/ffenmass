@@ -1,9 +1,26 @@
 
+
+## Notes for contributors
+ - Dependencies other than the Standard Python Library and ffmpeg are not allowed.
+
+
+
+
 ## TODO
- - Parse FFMPEG's output to create a progress bar
- - Find a way to make this work with 2 pass encoding
+ - Windows platform support
+ - Wait for bugs
+
+
 
 ## Changelogs
+
+**0.2.3**
+ 
+ - Made ffmpeg less verbose using -hide_banner
+ - FFenmass will now clear the terminal after each encode bc ffmpeg talks too much
+ - Made a less ugly and proper Readme
+
+
 **0.2.2**
  
  - Simplified code, optimized imports

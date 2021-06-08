@@ -6,13 +6,23 @@ from subprocess import call
 import sys
 from os import listdir, path
 from os.path import isfile, join, basename, normpath, relpath, dirname, abspath, isdir,splitext
-from pathlib import Path
+import pathlib
 from glob import glob
 
 
+
+menu = """
+ 
+    FFenmass
+    CLI Utility to encode and recreate directories with ffmpeg.
+    Version : 0.2.3
+                
+
+"""
+
 # Check if the Directory exists, if not make it
 def checkmake_dir(directory: str):
-    return Path(directory).mkdir(parents=True, exist_ok=True)
+    return pathlib.Path(directory).mkdir(parents=True, exist_ok=True)
 
 # Return All file objects from a directory tree
 def get_all_media_files_in_dir(inpath: str):
@@ -44,15 +54,8 @@ def dir_path(string):
 if __name__ == '__main__':
     try:
         system('cls' if name == 'nt' else 'clear')
-        print("""
-        
-        FFenmass
-        Simple ffmpeg wrapper to encode whole directories.
-        Written By : NoPantsCrash
-        Version : 0.2.2
-        
-        """)
-        args = ['ffmpeg', '-y']+sys.argv[1:]
+        print(menu)
+        args = ['ffmpeg','-hide_banner' ,'-y']+sys.argv[1:]
 
 
         #Checking if input exists
@@ -109,21 +112,34 @@ if __name__ == '__main__':
         for file in inputfiles:
             args[args.index('-i') + 1] = file
             print(
-                f"Processed : {counter}/{len(inputfiles)}")
+                    f"Processed : {counter}/{len(inputfiles)}")
             print(
-                f"Currently Processing  : {basename(file)}")
+                    f"Currently Processing  : {basename(file)}")
             print("\n\n\n")
 
             args[-1] = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
-            call(args)
-            print("\n\n\n")
+            
+            try:
+                call(args)
+            except KeyboardInterrupt:
+                print('Keyboard Exception, exiting.')
+                break
+            
+            
             counter += 1
 
+            # Clearing everything and reprinting
+            system('cls' if name == 'nt' else 'clear')
+            print(menu)
 
-    #Basic Keyboard Interrupt
+            
+    
+    
+    #Keyboard Interrupt
     except KeyboardInterrupt:
         print('Keyboard Exception, exiting.')
         try:
             sys.exit(0)
         except SystemExit:
             _exit(0)
+
