@@ -5,10 +5,10 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ffenmass",
-    version="0.2.1",
+    version="0.2.2",
     author="NoPantsCrash",
     author_email="abtziangiorgos@gmail.com.com",
-    description="Utility to encode and recreate whole directories with ffmpeg.",
+    description="CLI Utility to encode and recreate whole directories with ffmpeg.",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/NoPantsCrash/ffenmass",
