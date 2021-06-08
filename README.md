@@ -32,8 +32,8 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#changelogs">Changelogs</a></li>
-    <li><a href="#license">License (MIT)</a></li>
+    <li><a href="/CHANGELOGS.md">Changelogs</a></li>
+    <li><a href="/LICENCE">License (MIT)</a></li>
   </ol>
 </details>
 
@@ -48,13 +48,13 @@ FFenmass is an ffmpeg wrapper, adding the ability to manipulate media files in d
 Currently works in **Linux** folder structures only.
 **Windows** support is planned.
 
-<br>
+
 
 ### Prerequisites
 
 FFenmass only requires **ffmpeg** and **python3**.
 
-<br>
+
 
 ### Installation
 
