@@ -74,7 +74,7 @@ Using `pip`
 
 The only **differences being** the **input (-i) and** the **output** being **directories instead of files**.
 
-Also **ffenmass ignores file extensions**, you will need to **specifify container using ffmpeg's -f argument**.
+Also **ffenmass ignores file extensions**, you will need to **specify container using ffmpeg's -f argument**.
 
 The result is ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
