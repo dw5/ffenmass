@@ -32,19 +32,24 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
+    <li><a href="#features">Features</a></li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#contributing">Contributing</a></li>
-    <li><a href="/CHANGELOGS.md">Changelogs</a></li>
+    <li><a href="/CHANGELOGS.md">Changelogs & TODOs</a></li>
     <li><a href="/LICENCE">License (MIT)</a></li>
   </ol>
 </details>
 
+<br>
 
+### Features
+ - Proccecing whole directories from the CLI interface.
+ - Recreating directories with identical foldernames/filenames on the output.
 
-
+<br>
 
 <!-- GETTING STARTED -->
-## Getting Started
+### Getting Started
 
 FFenmass is an ffmpeg wrapper, adding the ability to manipulate media files in directories and recreate them recursively.
 Currently works in **Linux** folder structures only.
@@ -72,9 +77,9 @@ Using `pip`
 
 **FFenmass** is transparent above **ffmpeg**, this means **most ffmpeg syntax can be used with ffenmass as is**.
 
-The only **differences being** the **input (-i) and** the **output** being **directories instead of files**.
+The only **differences being** the **input** `(-i)` and the **output** being **directories instead of files**.
 
-Also **ffenmass ignores file extensions**, you will need to **specify container using ffmpeg's -f argument**.
+Also **ffenmass ignores file extensions**, you will need to **specify container using ffmpeg's `-f` argument**.
 
 The result is ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
@@ -116,10 +121,6 @@ path/to/folder/                           /output/directory/
 ## Contributing
 Any contributions you make are **greatly appreciated**.
 
-
-
-
-<!-- LICENSE -->
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
