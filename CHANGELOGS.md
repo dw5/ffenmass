@@ -8,7 +8,8 @@
 
 ## TODO
  - Windows platform support
- - Wait for bugs
+ - Make media reside in /var/tmp/ until encoding is finished, to avoid having corrupted files on the output directory in case of program termination.
+ - Redo the queue system, add optional functionality to resume directory encodings based on files present between source and output directories.
 
 
 
