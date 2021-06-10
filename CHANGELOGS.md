@@ -1,7 +1,7 @@
 
 
 ## Notes for contributors
- - Dependencies other than the Standard Python Library and ffmpeg are not allowed.
+ - Keep external dependencies to a minimum if possible.
 
 
 
