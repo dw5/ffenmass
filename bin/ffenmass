@@ -128,10 +128,6 @@ if __name__ == '__main__':
             
             counter += 1
 
-            # Clearing everything and reprinting
-            system('cls' if name == 'nt' else 'clear')
-            print(menu)
-
             
     
     
