@@ -9,7 +9,7 @@
   <h3 align="center">FFenmass</h3>
 
   <p align="center">
-  <img alt="PyPI" src="https://img.shields.io/pypi/v/ffenmass"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ffenmass"> <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/ffenmass"> <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ffenmass"> <img alt="PyPI - Format" src="https://img.shields.io/pypi/format/ffenmass"> <img alt="PyPI - Status" src="https://img.shields.io/pypi/status/ffenmass">
+  <img alt="PyPI" src="https://img.shields.io/pypi/v/ffenmass"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ffenmass"> <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/ffenmass"> <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ffenmass">
   <br />
     CLI Utility to encode and recursively recreate directories with ffmpeg. 
     <br />
