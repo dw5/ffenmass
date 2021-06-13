@@ -43,23 +43,28 @@
 <br>
 
 ### Features
- - Proccecing whole directories from the CLI interface.
+ - Processing whole directories with ffmpeg.
  - Recreating directories with identical foldernames/filenames on the output.
+ - Skipping Files that have alredy been processed.
+ - Deleting half processed files, to keep output directory clean.
+ - Cool loading bars, I guess.
 
 <br>
 
 <!-- GETTING STARTED -->
 ### Getting Started
 
-FFenmass is an ffmpeg wrapper, adding the ability to manipulate media files in directories and recreate them recursively.
-Currently works in **Linux** folder structures only.
-**Windows** support is planned.
+FFenmass is an ffmpeg wrapper, adding the ability to process media files in directories and recreate them recursively.
+Currently works only with **Linux** folder structures.
+
 
 
 
 ### Prerequisites
 
-FFenmass only requires **ffmpeg** and **python3**.
+ - `ffmpeg`
+ - `tqdm`
+ - `yaspin`
 
 
 
@@ -81,7 +86,7 @@ The only **differences being** the **input** `(-i)` and the **output** being **d
 
 Also **ffenmass ignores file extensions**, you will need to **specify container using ffmpeg's `-f` argument**.
 
-The result is ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
+The result is, ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
 <br>
 
