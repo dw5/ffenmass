@@ -8,12 +8,22 @@
 
 ## TODO
  - Windows platform support
- - Make media reside in /var/tmp/ until encoding is finished, to avoid having corrupted files on the output directory in case of program termination.
- - Redo the queue system, add optional functionality to resume directory encodings based on files present between source and output directories.
 
 
 
 ## Changelogs
+
+**0.2.4**
+ - FFenmass will now clean after itself, if interupted during processing, the item that was last in progress will be deleted.
+ - FFenmass will skip files that already exist with the same filename in the output directory.
+ - Encoding queue is now sorted alphanumerically.
+ - Yaspin is now a dependency.
+ - TQDM is now a dependency.
+ - Prettyfied output.
+ - FFmpeg is now mute (again).
+
+
+
 
 **0.2.3**
  
