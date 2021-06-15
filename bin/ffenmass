@@ -4,8 +4,6 @@
 from os import system, _exit,name
 import subprocess
 import sys
-from os import listdir, path,remove
-from os.path import isfile, join, basename, normpath, relpath, dirname, abspath, isdir,splitext,exists
 import pathlib
 from glob import glob
 from tqdm import tqdm
@@ -24,44 +22,56 @@ menu = """
 
 
 
-# Check if the Directory exists, if not make it
+# Check if the Directory exists, if not create it.
 def checkmake_dir(directory: str):
     return pathlib.Path(directory).mkdir(parents=True, exist_ok=True)
 
-# Return All file objects from a directory tree
+# Return All files from a directory tree in a sorted list.
 def get_all_media_files_in_dir(inpath: str):
     filesonly = []
     for item in tqdm(list(glob(inpath + '/**/*', recursive=True))):
-        if isfile(item):
+        # Excluding directories. 
+        if pathlib.Path(item).is_file():
             filesonly.append(item)
-
+    # We do a little bit of sorting.
     return sorted(filesonly)
 
 
 
-# Change the full input path root path to match the output root path
 def outfile_path(fullfilepath: str,inpath:str, outpath: str):
+    # Replace from fullfilepath the inpath with the outpath
     fullout = fullfilepath.replace(inpath,outpath)
-    checkmake_dir(dirname(fullout))
-    return splitext(fullout)[0]
+    # Check if parent directory of file exists, if not make it.
+    checkmake_dir(pathlib.Path(fullout).parent)
+    
+    
+    # Return the final output path without an extension
+    # This is temporary until I find a way to parse extensions from -f argument
+    return (pathlib.Path(fullout).parent).joinpath(pathlib.Path(fullout).stem)
 
 
 
 # Check if a string is a directory
 def dir_path(string):
-    if isdir(string):
+    if pathlib.Path(string).is_dir():
         return string
     else:
         return False
 
 
 if __name__ == '__main__':
+    # Cross compatible terminal clearing
     system('cls' if name == 'nt' else 'clear')
+
+    # prints predefined menu
     print(menu)
-    args = ['ffmpeg','-hide_banner' ,'-y']+sys.argv[1:]
+    
+    
+    # Getting arguments list
+    args = ['ffmpeg','-y']+sys.argv[1:]
 
 
-    #Checking if input exists
+    #Checking if input [-i] exists
     try:
         inpath = args[args.index('-i') + 1]
     except ValueError:
@@ -91,7 +101,9 @@ if __name__ == '__main__':
         except SystemExit:
             _exit(0)
 
-        #Checking if extension is provided
+
+
+    #Checking if extension is provided
     try:
         extension = args[args.index('-f') + 1]
     except ValueError:
@@ -105,7 +117,9 @@ if __name__ == '__main__':
     print(f'Output Directory : \"{outpath}\"')
     print(f'Container : \"{extension}\"')
     print('\n')
-    #Getting all paths and files
+
+
+    #Getting files
     print(f'Grabbing files...\n')
     inputfiles = get_all_media_files_in_dir(inpath=inpath)
     if inputfiles is None:
@@ -127,22 +141,23 @@ if __name__ == '__main__':
             args[-1] = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
 
 
-            #Checking if file already exists on the output directory
-            if not exists(args[-1]):
+            #Checking if file doesn't already exists on the output directory
+            if not pathlib.Path(args[-1]).is_file:
                 with yaspin(text="") as sp:
-                    sp.color, sp.text = 'yellow',basename(file)
+                    sp.color, sp.text = 'yellow',pathlib.Path(file).name
                     subprocess.call(args,stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-                    sp.write(f"✔ Completed : {basename(file)}")
+                    sp.write(f"✔ Completed : {pathlib.Path(file).name}")
                     
-            # Else print out file exists and skips
+            # If it does, print out file exists and skip
             else:
-                print(f"✗ Skipped : \"{basename(file)}\" Already Exists")
+                print(f"✗ Skipped : \"{pathlib.Path(file).name}\" Already Exists")
 
         # On interrupt, delete last encoded file to keep output directory free of unfinished files.
         except KeyboardInterrupt:
             print('Keyboard Exception, cleaning up.')
-            if exists(outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)):
-                remove(outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath))
+            lastfile = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
+            if pathlib.Path(lastfile).is_file():
+                pathlib.Path(lastfile)).unlink(missing_ok=True)
             print(f'Goodbye.')
             try:
                 
