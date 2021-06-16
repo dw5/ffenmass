@@ -9,7 +9,7 @@
   <h3 align="center">FFenmass</h3>
 
   <p align="center">
-  <img alt="PyPI" src="https://img.shields.io/pypi/v/ffenmass"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ffenmass"> <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/ffenmass"> <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ffenmass"> <img alt="PyPI - Format" src="https://img.shields.io/pypi/format/ffenmass"> <img alt="PyPI - Status" src="https://img.shields.io/pypi/status/ffenmass">
+  <img alt="PyPI" src="https://img.shields.io/pypi/v/ffenmass"> <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/ffenmass"> <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/ffenmass"> <img alt="PyPI - License" src="https://img.shields.io/pypi/l/ffenmass">
   <br />
     CLI Utility to encode and recursively recreate directories with ffmpeg. 
     <br />
@@ -43,29 +43,34 @@
 <br>
 
 ### Features
- - Proccecing whole directories from the CLI interface.
+ - Processing whole directories with ffmpeg.
  - Recreating directories with identical foldernames/filenames on the output.
+ - Skipping Files that have alredy been processed.
+ - Deleting half processed files, to keep output directory clean.
+ - Cool loading bars, I guess.
 
 <br>
 
 <!-- GETTING STARTED -->
 ### Getting Started
 
-FFenmass is an ffmpeg wrapper, adding the ability to manipulate media files in directories and recreate them recursively.
-Currently works in **Linux** folder structures only.
-**Windows** support is planned.
+FFenmass is an ffmpeg wrapper, adding the ability to process media files in directories and recreate them recursively.
+Currently works only with **Linux** folder structures.
+
 
 
 
 ### Prerequisites
 
-FFenmass only requires **ffmpeg** and **python3**.
+ - `ffmpeg`
+ - `tqdm`
+ - `yaspin`
 
 
 
 ### Installation
 
-Using `pip`
+Recommended way is using `pip`, as building from git can be unstable.
    ```bash
    pip3 install ffenmass
    ```
@@ -75,22 +80,30 @@ Using `pip`
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-**FFenmass** is transparent above **ffmpeg**, this means **most ffmpeg syntax can be used with ffenmass as is**.
+**FFenmass** is transparent above **ffmpeg**, this means **most ffmpeg syntax can be used with ffenmass as is** to encode directories, using your standard settings.
 
-The only **differences being** the **input** `(-i)` and the **output** being **directories instead of files**.
 
-Also **ffenmass ignores file extensions**, you will need to **specify container using ffmpeg's `-f` argument**.
+#### Differences
 
-The result is ffenmass will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
+ - **-i** - This needs to be a directory created beforehand, instead of a file.
+
+- **output** - This needs to be a directory, instead of a file.If the directory does not exist it will be creted. The output must be the last argument as per standard ffmpeg syntax.
+
+
+ - **-ext** - This is a custom argument, specific to **ffenmass**, here you will provide the extension you want for your files, examples `mp4,mkv,opus,mp3` , you only provide the extension and with no `.`, for further clarification, look at the command comparison below.
+
+
+
+The result is, **ffenmass** will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
 <br>
 
 ### Example compared to standard ffmpeg syntax
 ```bash
-ffmpeg -i input.mkv -acodec copy -vcodec libx265 -b:v 2M -minrate 1M -maxrate 3M -preset medium out.mp4
+ffmpeg -i input.mkv -acodec copy -vcodec libx265 -preset medium out.mp4
 
 
-ffenmass -i /path/to/folder/ -acodec copy -vcodec libx265 -b:v 2M -minrate 1M -maxrate 3M -preset medium -f mp4 /output/directory/
+ffenmass -i /path/to/folder/ -acodec copy -vcodec libx265 -preset medium -ext mp4 /output/directory/
 ```
 <br>
 <br>

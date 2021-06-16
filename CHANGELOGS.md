@@ -13,6 +13,17 @@
 
 ## Changelogs
 
+
+**0.2.5**
+ - Migrated from os.path over to pathlib.(yay)
+ - Added additional required argument `-ext`.
+ - FFenmass now handled file extensions
+ - `-f` argument is no longer required by ffenmass and is not checked.
+ - Some ground work to prepare for windows testing and debuging.
+ - Updated Readme with better examples.
+ - Additional Code docs to help me mostly.
+
+
 **0.2.4**
  - FFenmass will now clean after itself, if interupted during processing, the item that was last in progress will be deleted.
  - FFenmass will skip files that already exist with the same filename in the output directory.

@@ -38,16 +38,15 @@ def get_all_media_files_in_dir(inpath: str):
 
 
 
-def outfile_path(fullfilepath: str,inpath:str, outpath: str):
+def outfile_path(fullfilepath: str,inpath:str, outpath: str,extension:str):
     # Replace from fullfilepath the inpath with the outpath
     fullout = fullfilepath.replace(inpath,outpath)
     # Check if parent directory of file exists, if not make it.
     checkmake_dir(pathlib.Path(fullout).parent)
     
     
-    # Return the final output path without an extension
-    # This is temporary until I find a way to parse extensions from -f argument
-    return (pathlib.Path(fullout).parent).joinpath(pathlib.Path(fullout).stem)
+    # Return the final output path with extension
+    return f"{(pathlib.Path(fullout).parent).joinpath(pathlib.Path(fullout).stem)}.{extension}"
 
 
 
@@ -105,13 +104,27 @@ if __name__ == '__main__':
 
     #Checking if extension is provided
     try:
-        extension = args[args.index('-f') + 1]
-    except ValueError:
-        print('ERROR : Could not catch -f argument')
+        extension = args[args.index('-ext') + 1]
+
+        # Checking if the argument after -ext is a directory, if yes then the user did not provide an extension
+        if pathlib.Path(args[args.index('-ext') + 1]).is_file() or pathlib.Path(args[args.index('-ext') + 1]).is_dir():
+            raise ValueError
+        
+        # Deleting the non default argument
+        args.pop(args.index('-ext') + 1)
+        args.pop(args.index('-ext'))
+    
+    except (ValueError,IndexError):
+        print('ERROR : Could not catch -ext argument, please provide an extension.')
         try:
             sys.exit(0)
         except SystemExit:
             _exit(0)
+    
+    
+    # Removing the non standard argument to be ffmpeg compatible as its not required by ffmpeg.
+    
+
 
     print(f'Input Directory : \"{inpath}\"')
     print(f'Output Directory : \"{outpath}\"')
@@ -138,26 +151,26 @@ if __name__ == '__main__':
         try:
             args[args.index('-i') + 1] = file
 
-            args[-1] = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
+            args[-1] = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath,extension=extension)
 
 
             #Checking if file doesn't already exists on the output directory
-            if not pathlib.Path(args[-1]).is_file:
-                with yaspin(text="") as sp:
-                    sp.color, sp.text = 'yellow',pathlib.Path(file).name
+            if not pathlib.Path(args[-1]).is_file():
+                with yaspin() as sp:
+                    sp.color, sp.text = 'yellow',pathlib.Path(args[-1]).name
                     subprocess.call(args,stderr=subprocess.DEVNULL, stdout=subprocess.DEVNULL)
-                    sp.write(f"✔ Completed : {pathlib.Path(file).name}")
+                    sp.write(f"✔ Completed : {pathlib.Path(args[-1]).name}")
                     
             # If it does, print out file exists and skip
             else:
-                print(f"✗ Skipped : \"{pathlib.Path(file).name}\" Already Exists")
+                print(f"✗ Skipped : \"{pathlib.Path(args[-1]).name}\" Already Exists")
 
         # On interrupt, delete last encoded file to keep output directory free of unfinished files.
         except KeyboardInterrupt:
             print('Keyboard Exception, cleaning up.')
-            lastfile = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath)
+            lastfile = outfile_path(fullfilepath=file,inpath=inpath ,outpath=outpath,extension=extension)
             if pathlib.Path(lastfile).is_file():
-                pathlib.Path(lastfile)).unlink(missing_ok=True)
+                pathlib.Path(lastfile).unlink(missing_ok=True)
             print(f'Goodbye.')
             try:
                 
