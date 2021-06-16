@@ -19,7 +19,7 @@
   </p>
 </p>
 
-
+<img src="images/example.gif" width="1000" height="350" />
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
