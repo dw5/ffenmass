@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ffenmass",
-    version="0.2.4",
+    version="0.2.5",
     author="NoPantsCrash",
     author_email="abtziangiorgos@gmail.com.com",
     description="CLI Utility to encode and recreate directories with ffmpeg.",
