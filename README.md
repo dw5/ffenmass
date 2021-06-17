@@ -55,7 +55,6 @@
 ### Getting Started
 
 FFenmass is an ffmpeg wrapper, adding the ability to process media files in directories and recreate them recursively.
-Currently works only with **Linux** folder structures.
 
 
 
