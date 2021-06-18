@@ -13,6 +13,10 @@
 
 ## Changelogs
 
+**0.2.6**
+ - Parsing FFmpeg input to display speed.
+ - Fixed exit bug when creating non-existing output folder.
+
 
 **0.2.5**
  - Migrated from os.path over to pathlib.(yay)
