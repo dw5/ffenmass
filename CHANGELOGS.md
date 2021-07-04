@@ -1,13 +1,8 @@
 
 
-## Notes for contributors
- - Keep external dependencies to a minimum if possible.
 
 
 
-
-## TODO
- - Windows platform support
 
 
 
