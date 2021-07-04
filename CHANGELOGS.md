@@ -13,6 +13,16 @@
 
 ## Changelogs
 
+**0.2.7**
+ - Rich and ffpb are now dependencies.
+ - Added a file filter, now only media files will be parsed when scanned.
+ - Using ffbp for a progress bar because I dont want to make one.
+ - Using Rich to make text prettier.
+ - Yaspin no longer a dependency, replaced by ffbp.
+ - Code cleaned up, file related functions are under their own Class.
+ - Small changes to comments to be more thorough. 
+
+
 **0.2.6**
  - Parsing FFmpeg input to display speed.
  - Fixed exit bug when creating non-existing output folder.

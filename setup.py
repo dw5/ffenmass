@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setuptools.setup(
     name="ffenmass",
-    version="0.2.6",
+    version="0.2.7",
     author="NoPantsCrash",
     author_email="abtziangiorgos@gmail.com.com",
     description="CLI Utility to encode and recreate directories with ffmpeg.",
@@ -23,7 +23,8 @@ setuptools.setup(
     scripts=['bin/ffenmass'],
     install_requires=[
         'setuptools',
-        'yaspin',
+        'ffpb',
+        'rich'
         'tqdm'
     ],
 )

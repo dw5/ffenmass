@@ -3,7 +3,7 @@
 <br />
 <p align="center">
   <a href="https://github.com/NoPantsCrash/ffenmass">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="https://github.com/NoPantsCrash/ffenmass/blob/master/images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">FFenmass</h3>
@@ -19,7 +19,7 @@
   </p>
 </p>
 
-<img src="images/example.gif" width="1000" height="350" />
+<img src="https://github.com/NoPantsCrash/ffenmass/blob/master/images/example.gif" width="1000" height="350" />
 
 <!-- TABLE OF CONTENTS -->
 <details open="open">
@@ -47,7 +47,7 @@
  - Recreating directories with identical foldernames/filenames on the output.
  - Skipping Files that have alredy been processed.
  - Deleting half processed files, to keep output directory clean.
- - Cool loading bars, I guess.
+ - Ignoring non media files.
 
 <br>
 
@@ -62,8 +62,9 @@ FFenmass is an ffmpeg wrapper, adding the ability to process media files in dire
 ### Prerequisites
 
  - `ffmpeg`
+ - `ffpb` - Yeah I cant be bothered to make a ffmpeg loading bar, this works fine.
  - `tqdm`
- - `yaspin`
+ - `rich`
 
 
 
@@ -82,7 +83,7 @@ Recommended way is using `pip`, as building from git can be unstable.
 **FFenmass** is transparent above **ffmpeg**, this means **most ffmpeg syntax can be used with ffenmass as is** to encode directories, using your standard settings.
 
 
-#### Differences
+## Differences
 
  - **-i** - This needs to be a directory created beforehand, instead of a file.
 
@@ -91,7 +92,7 @@ Recommended way is using `pip`, as building from git can be unstable.
 
  - **-ext** - This is a custom argument, specific to **ffenmass**, here you will provide the extension you want for your files, examples `mp4,mkv,opus,mp3` , you only provide the extension and with no `.`, for further clarification, look at the command comparison below.
 
-
+**!! Directories are required to have a trailing slash `/` !!**
 
 The result is, **ffenmass** will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
 
@@ -99,22 +100,21 @@ The result is, **ffenmass** will **encode all media files detected under the inp
 
 ### Example compared to standard ffmpeg syntax
 ```bash
-ffmpeg -i input.mkv -acodec copy -vcodec libx265 -preset medium out.mp4
+ffmpeg -i input.mkv -vcodec libx265 -preset medium out.mp4
 
 
-ffenmass -i /path/to/folder/ -acodec copy -vcodec libx265 -preset medium -ext mp4 /output/directory/
+ffenmass -i /path/to/folder/ -vcodec libx265 -preset medium -ext mp4 /output/directory/
 ```
 <br>
 <br>
 
 **Directory Tree visualization** of what is going on when you run the **command from the example above**.
 ```
-path/to/folder/                           /output/directory/
+/path/to/folder/                           /output/directory/
 ├── givemefolders                         ├── givemefolders      
 │   ├── somefolder                        │   ├── somefolder
 │   │   └── example_movie.mkv             │   │   └── example_movie.mp4
-│   ├── myfavvideo.mkv                    │   ├── myfavvideo.mp4  
-│   ├── example_movie.m2ts                │   ├── example_movie.mp4
+│   │   └── irrelevant_textfile.txt       │   │   
 │   ├── another_example.mkv         →     │   ├── another_example.mp4
 │   ├── morefolders                       │   ├── morefolders
 │   │   └── a_lot_of_examples.ts          │   │   └── a_lot_of_examples.mp4  
@@ -129,9 +129,7 @@ path/to/folder/                           /output/directory/
 
 <br>
 
-<!-- CONTRIBUTING -->
-## Contributing
-Any contributions you make are **greatly appreciated**.
+
 
 ## License
 

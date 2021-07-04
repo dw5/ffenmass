@@ -1,24 +1,37 @@
 #!/usr/bin/env python3
 
 
+
+# For File managing and Interrupts
 from os import system, _exit,name
 import subprocess
 import sys
 import pathlib
 from glob import glob
+
+# For the CLI Interface
+from rich import print
 from tqdm import tqdm
-from yaspin import yaspin
+from rich.live import Live
+from rich.table import Table
+
 
 VERSION = '0.2.7'
 
 menu = f"""
  
-    FFenmass
-    CLI Utility to encode and recreate directories with ffmpeg.
-    Version : {VERSION}
+    [bold Yellow]FFenmass[/bold Yellow]
+    [bold White]CLI Utility to encode and recreate directories with ffmpeg.[/bold White]
+    [bold White]Version : [/bold White][bold Red]{VERSION}[/bold Red]
                 
 
 """
+
+
+
+
+
+
 
 # All things directories
 class DirectoryManager():
@@ -27,7 +40,7 @@ class DirectoryManager():
     def checkmake(input_path: str):
         return pathlib.Path(input_path).mkdir(parents=True, exist_ok=True)
 
-    # Return All files from a directory tree in a sorted list.
+    # Return All files from a directory tree in a sorted list.Checking against the file extension list
     def mediafiles(input_path: str):
         extension_list = ['.aif','.cda','.mid','.midi','.mp3','.mpa','.ogg','.wav','.opus','.wma','.wpl','.mka','.webm','.vob','.ogv','.ogx','.mpeg','.mpg',
                             '.3g2','.flac','.3gp','.avi','.divx','.flv','.h264','.m4v','.mkv','.mk3d','.mov','.mp4','.mpg','.mpeg','.rm','.swf','.vob','.wmv','.ts','.m2ts']
@@ -36,11 +49,10 @@ class DirectoryManager():
             # Excluding directories. 
             if pathlib.Path(item).is_file() and (pathlib.Path(item).suffix in extension_list):
                 filesonly.append(item)
-        # We do a little bit of sorting.
         return sorted(filesonly)
 
 
-
+    #Generate the output path to give ffmpeg
     def outfile(file: str,input_path:str, output_path: str,extension:str):
         # Replace from file the input_path with the output_path
         fullout = file.replace(input_path,output_path)
@@ -70,13 +82,13 @@ if __name__ == '__main__':
     
     
     # Getting arguments list
-    args = ['ffmpeg','-y']+sys.argv[1:]
-
+    args = ['ffpb','-y']+sys.argv[1:]
+    
     #Checking if input [-i] exists
     try:
         input_path = args[args.index('-i') + 1]
     except ValueError:
-            print('ERROR : Could not catch -i argument')
+            print('[bold Red]ERROR : Could not catch -i argument[/bold Red]')
             try:
                 sys.exit(0)
             except SystemExit:
@@ -87,7 +99,7 @@ if __name__ == '__main__':
     if DirectoryManager.if_dir(input_path):
             pass
     else:
-        print('Input is not a valid directory!')
+        print('[bold Red]Input is not a valid directory![/bold Red]')
         try:
             sys.exit(0)
         except SystemExit:
@@ -95,7 +107,7 @@ if __name__ == '__main__':
     if DirectoryManager.if_dir(output_path):
             pass
     else:
-        print(f'\nCreating {output_path}, because it does not exist.\n')
+        print(f'[bold Grey]\nCreating {output_path}, because it does not exist.\n[/bold Grey]')
         DirectoryManager.checkmake(output_path)
 
 
@@ -114,7 +126,7 @@ if __name__ == '__main__':
         args.pop(args.index('-ext'))
     
     except (ValueError,IndexError):
-        print('ERROR : Could not catch -ext argument, please provide an extension.')
+        print('[bold Red]ERROR : Could not catch -ext argument, please provide an extension.[/bold Red]')
         try:
             sys.exit(0)
         except SystemExit:
@@ -125,26 +137,26 @@ if __name__ == '__main__':
     
 
 
-    print(f'Input Directory : \"{input_path}\"')
-    print(f'Output Directory : \"{output_path}\"')
-    print(f'Extension : \"{extension}\"')
+    print(f"""
+    [bold White]Input Directory :[/bold White] [bold Yellow]\"{input_path}\"[/bold Yellow]
+    [bold White]Output Directory :[/bold White] [bold Yellow]\"{output_path}\"[/bold Yellow]
+    [bold White]Extension :[/bold White] [bold Yellow]\"{extension}\"[/bold Yellow]""")
     print('\n')
 
 
     #Getting files
-    print(f'Grabbing files...\n')
+    print(f'[bold White]Grabbing files...[/bold White]\n')
     inputfiles = DirectoryManager.mediafiles(input_path=input_path)
     if inputfiles is None:
-        print('ERROR : No Files in Directory')
+        print('[bold Red]ERROR : No Files in Directory[/bold Red]')
         try:
             sys.exit(0)
         except SystemExit:
             _exit(0)
 
-    print(f'\nFile collection complete, {len(inputfiles)} file(s) will be processed.\n\n\n')
+    print(f'\n[bold White]File collection complete, {len(inputfiles)} file(s) will be processed.[/bold White]\n\n\n')
     
     
-    print("---Processing---\n")
     #Main Program Loop
     for file in inputfiles:
         try:
@@ -155,29 +167,25 @@ if __name__ == '__main__':
 
             #Checking if file doesn't already exists on the output directory
             if not pathlib.Path(args[-1]).is_file():
-                with yaspin() as sp:
-                    ffmpeg_process = subprocess.Popen(args,stdout=subprocess.PIPE, stderr=subprocess.STDOUT,universal_newlines=True)
-                    sp.color, sp.text = 'yellow', f"In Progress... |{pathlib.Path(file).name}"
+                
+                subprocess.run(args)
 
                 
-                    sp.write(f"✔ Completed : {pathlib.Path(file).name}")
-                    
             # If it does, print out file exists and skip
             else:
-                print(f"✗ Skipped : \"{pathlib.Path(file).name}\" Already Exists")
+                print(f"[bold Red]✗ Skipped[/bold Red] : [bold White]\"{pathlib.Path(args[-1]).name}\" Already Exists[/bold White]")
 
         # On interrupt, delete last encoded file to keep output directory free of unfinished files.
         except KeyboardInterrupt:
-            print('Keyboard Exception, cleaning up.')
-            lastfile = DirectoryManager.outfile(file=file,input_path=input_path ,output_path=output_path,extension=extension)
-            if pathlib.Path(lastfile).is_file():
-                pathlib.Path(lastfile).unlink(missing_ok=True)
-            print(f'Goodbye.')
-            try:
-                
-                sys.exit(0)
-            except SystemExit:
-                _exit(0)
+                print('[bold Red]Keyboard Exception, cleaning up.[/bold Red]')
+                lastfile = DirectoryManager.outfile(file=file,input_path=input_path ,output_path=output_path,extension=extension)
+                if pathlib.Path(lastfile).is_file():
+                    pathlib.Path(lastfile).unlink(missing_ok=True)
+                try:
+                        
+                    sys.exit(0)
+                except SystemExit:
+                    _exit(0)
 
         
             
