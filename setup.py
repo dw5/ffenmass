@@ -24,7 +24,7 @@ setuptools.setup(
     install_requires=[
         'setuptools',
         'ffpb',
-        'rich'
+        'rich',
         'tqdm'
     ],
 )
