@@ -87,7 +87,7 @@ Recommended way is using `pip`, as building from git can be unstable.
 
  - **-i** - This needs to be a directory created beforehand, instead of a file.
 
-- **output** - This needs to be a directory, instead of a file.If the directory does not exist it will be creted. The output must be the last argument as per standard ffmpeg syntax.
+- **output** - This needs to be a directory, instead of a file.If the directory does not exist it will be created. The output must be the last argument as per standard ffmpeg syntax.
 
 
  - **-ext** - This is a custom argument, specific to **ffenmass**, here you will provide the extension you want for your files, examples `mp4,mkv,opus,mp3` , you only provide the extension and with no `.`, for further clarification, look at the command comparison below.

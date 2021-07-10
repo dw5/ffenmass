@@ -8,6 +8,18 @@
 
 ## Changelogs
 
+**0.2.9**
+
+- Added more extensions to the extension filter list.
+
+
+
+**0.2.8**
+- This Version Was Skipped due to an issue with pipy
+
+
+
+
 **0.2.7**
  - Rich and ffpb are now dependencies.
  - Added a file filter, now only media files will be parsed when scanned.

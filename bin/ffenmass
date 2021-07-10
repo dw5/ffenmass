@@ -14,9 +14,10 @@ from rich import print
 from tqdm import tqdm
 from rich.live import Live
 from rich.table import Table
+import ffpb
 
 
-VERSION = '0.2.7'
+VERSION = '0.2.9'
 
 menu = f"""
  
@@ -42,8 +43,28 @@ class DirectoryManager():
 
     # Return All files from a directory tree in a sorted list.Checking against the file extension list
     def mediafiles(input_path: str):
-        extension_list = ['.aif','.cda','.mid','.midi','.mp3','.mpa','.ogg','.wav','.opus','.wma','.wpl','.mka','.webm','.vob','.ogv','.ogx','.mpeg','.mpg',
-                            '.3g2','.flac','.3gp','.avi','.divx','.flv','.h264','.m4v','.mkv','.mk3d','.mov','.mp4','.mpg','.mpeg','.rm','.swf','.vob','.wmv','.ts','.m2ts']
+        extension_list = [
+            '.aif','.cda',
+            '.mid','.midi',
+            '.mp3','.mpa',
+            '.ogg','.wav',
+            '.opus','.wma',
+            '.wpl','.mka',
+            '.webm','.vob',
+            '.ogv','.ogx',
+            '.mpeg','.mpg',
+            '.3g2','.flac',
+            '.3gp','.avi',
+            '.divx','.flv',
+            '.h264','.m4v',
+            '.mkv','.mk3d',
+            '.mov','.mp4',
+            '.mpg','.mpeg',
+            '.rm','.swf',
+            '.vob','.wmv',
+            '.ts','.m2ts',
+            '.m4a','.gif',
+            '.m4p']
         filesonly = []
         for item in tqdm(list(glob(input_path + '/**/*', recursive=True))):
             # Excluding directories. 
@@ -82,7 +103,7 @@ if __name__ == '__main__':
     
     
     # Getting arguments list
-    args = ['ffpb','-y']+sys.argv[1:]
+    args = ['-y']+sys.argv[1:]
     
     #Checking if input [-i] exists
     try:
@@ -167,8 +188,11 @@ if __name__ == '__main__':
 
             #Checking if file doesn't already exists on the output directory
             if not pathlib.Path(args[-1]).is_file():
-                
-                subprocess.run(args)
+                # Curtesy of @althonos
+                retcode = ffpb.main(args)
+                if retcode == 130:
+                    raise KeyboardInterrupt()
+                #subprocess.run(args)
 
                 
             # If it does, print out file exists and skip
