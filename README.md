@@ -111,7 +111,7 @@ ffenmass -i /path/to/folder/ -vcodec libx265 -preset medium -ext mp4 /output/dir
 **Directory Tree visualization** of what is going on when you run the **command from the example above**.
 ```
 /path/to/folder/                           /output/directory/
-├── givemefolders/                         ├── givemefolders/      
+├── givemefolders/                        ├── givemefolders/      
 │   ├── somefolder/                       │   ├── somefolder/
 │   │   └── example_movie.mkv             │   │   └── example_movie.mp4
 │   │   └── irrelevant_textfile.txt       │   │   
