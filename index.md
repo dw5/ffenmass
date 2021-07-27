@@ -3,7 +3,7 @@
 ### Prerequisites
 
  - `ffmpeg`
- - `ffpb` - Yeah I cant be bothered to make a ffmpeg loading bar, this works fine.
+ - `ffpb` 
  - `tqdm`
  - `rich`
 
