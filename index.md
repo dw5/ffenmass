@@ -1,37 +1,66 @@
-## Welcome to GitHub Pages
+### Prerequisites
 
-You can use the [editor on GitHub](https://github.com/NoPantsCrash/ffenmass/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
+ - `ffmpeg`
+ - `ffpb` - Yeah I cant be bothered to make a ffmpeg loading bar, this works fine.
+ - `tqdm`
+ - `rich`
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
+### Installation
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Recommended way is using `pip`, as building from git can be unstable.
+   ```bash
+   pip3 install ffenmass
+   ```
 
-```markdown
-Syntax highlighted code block
 
-# Header 1
-## Header 2
-### Header 3
+## Differences to FFmpeg Syntax
 
-- Bulleted
-- List
+- **-i** - This needs to be a directory created beforehand, instead of a file.
 
-1. Numbered
-2. List
+- **output** - This needs to be a directory, instead of a file. If the directory does not exist it will be created. The output must be the last argument as per standard ffmpeg syntax.
 
-**Bold** and _Italic_ and `Code` text
 
-[Link](url) and ![Image](src)
+- **-ext** - This is a custom argument, specific to **ffenmass**, here you will provide the extension you want for your files, examples `mp4,mkv,opus,mp3` , you only provide the extension and with no `.`, for further clarification, look at the command comparison below.
+
+**!! Directories are required to have a trailing slash `/` !!**
+
+The result is, **ffenmass** will **encode all media files detected under the input directory** with the provided ffmpeg arguments and output them with the **same folder structure and filenames** in the **output directory**.
+
+<br>
+
+### Example compared to standard ffmpeg syntax
+```bash
+ffmpeg -i input.mkv -vcodec libx265 -preset medium out.mp4
+
+
+ffenmass -i /path/to/folder/ -vcodec libx265 -preset medium -ext mp4 /output/directory/
+```
+<br>
+<br>
+
+**Directory Tree visualization** of what is going on when you run the **command from the example above**.
+```
+/path/to/folder/                           /output/directory/
+├── givemefolders/                        ├── givemefolders/      
+│   ├── somefolder/                       │   ├── somefolder/
+│   │   └── example_movie.mkv             │   │   └── example_movie.mp4
+│   │   └── irrelevant_textfile.txt       │   │   
+│   ├── another_example.mkv         →     │   ├── another_example.mp4
+│   ├── morefolders/                      │   ├── morefolders/
+│   │   └── a_lot_of_examples.ts          │   │   └── a_lot_of_examples.mp4  
+│   └── documentary.mkv                   │   └── documentary.mp4
+├── another_example.mkv                   ├── another_example.mp4
+├── more-examples.mp4                     ├── more-examples.mp4 
+└── examples_and_examples.ts              └── examples_and_examples.mp4
+
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/NoPantsCrash/ffenmass/settings/pages). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+<br>
 
-### Support or Contact
 
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://support.github.com/contact) and we’ll help you sort it out.
+## License
+
+Distributed under the MIT License. See `LICENSE` for more information.
