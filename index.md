@@ -1,3 +1,5 @@
+## Encode directories with ffmpeg
+
 ### Prerequisites
 
  - `ffmpeg`
